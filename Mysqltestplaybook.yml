@@ -10,8 +10,6 @@ tasks:
         name: <package name>
     with_items:
       - mysql-server
-      - <item name1>
-      - <item name2>
   - name: CREating new database
     mysql_db:
         name: ansibletest
