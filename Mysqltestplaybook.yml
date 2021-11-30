@@ -1,0 +1,34 @@
+# Installing MySQL, running a query, deleting the db
+name: Testing MySQL
+hosts: 
+become: yes
+tasks:
+  - name: Installing MySQL after updating
+    yum:
+        update_cache: yes
+    package:
+        name: <package name>
+    with_items:
+      - mysql-server
+      - <item name1>
+      - <item name2>
+  - name: CREating new database
+    mysql_db:
+        name: ansibletest
+        state: present
+  - name: Running the test MySQL query
+    login_db: ansibletest
+    query:
+      - CREATE TABLE Address1 (
+        SrNo int, 
+        Address varchar(255)
+        );
+      - INSERT INTO Address1(SrNo, Address)
+        VALUES ('1','Sudama Nagar'),
+        ('2','Gumasta Nagar');
+      - DELETE FROM Address1
+        WHERE SrNo = 1;
+  - name: Deleting the database
+    mysql_db:
+      name: ansibletest
+      state: absent
