@@ -1,0 +1,23 @@
+# Installing MySQL, running sysbench, with mysql version as input
+# Play 1
+name: Installing MySQL, Sysbench, running sysbench with mysql version as input
+hosts: 
+become: yes
+tasks:
+  - name: Installing MySQL after updating
+    yum:
+        update_cache: yes
+    package:
+        name: <package name>
+    with_items:
+      - mysql-server
+  - name: Installing sysbench
+  - hosts:
+    become: yes
+    tasks:
+      - name: Install sysbench
+        yum:
+          name: sysbench
+          state: present
+      - name: Sysbench stresstest (60s / CPU)/ Running Sysbench
+        command: sysbench --max-time=60 --test=cpu --cpu-max-prime=200000 --num-threads=8 run
