@@ -12,7 +12,7 @@ tasks:
     with_items:
       - mysql-server
   - name: Installing sysbench
-  - hosts:
+    hosts:
     become: yes
     tasks:
       - name: Install sysbench

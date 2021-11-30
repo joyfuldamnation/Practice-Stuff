@@ -1,0 +1,70 @@
+# Installing MySQL, running sysbench, with mysql version as input
+# Play 1
+name: Testing MySQL
+hosts: 
+become: yes
+tasks:
+  - name: Installing MySQL after updating
+    yum:
+        update_cache: yes
+    package:
+        name: <package name>
+    with_items:
+      - mysql-server
+
+# Play 2
+name: Installing Sysbench
+hosts:
+  - mysql-client
+vars:
+  - sysbench_source_location: "/usr/local/src/sysbench"
+tasks:
+  - name: install percona apt key
+    apt_key: 
+      keyserver=keys.gnupg.net
+      id=1C4CBDCDCD2EFD2A
+
+  - name: install percona repo
+    apt_repository:
+      repo="deb http://repo.percona.com/apt trusty main"
+      state=present
+  - name: install required packages
+    apt:
+      name={{ item }}
+      state=installed
+      update_cache=yes
+      cache_valid_time=3600
+    with_items:
+      - build-essential
+      - autoconf 
+      - automake
+      - make
+      - libtool
+      - libssl-dev
+      - libcrypto++9
+      - libperconaserverclient18-dev
+      - git
+  - name: install sysbench git repo
+    git: 
+      repo="https://github.com/akopytov/sysbench"
+      dest={{ sysbench_source_location }}  
+  - name: see if sysbench is installed
+    command: which sysbench
+    register: sysbench_installed
+    ignore_errors: True
+    changed_when: False
+  - name: run autogen.sh 
+    shell: ./autogen.sh 
+    args:
+      chdir: "{{ sysbench_source_location }}"
+      creates: "{{ sysbench_source_location }}/configure"
+  - name: run configure 
+    shell: ./configure --prefix=/usr --mandir=/usr/share/man
+    args:
+      chdir: "{{ sysbench_source_location }}"
+      creates: "{{ sysbench_source_location }}/Makefile"
+  - name: make and install 
+    shell: make && make install 
+    args:
+      chdir: "{{ sysbench_source_location }}"
+    when: sysbench_installed.rc > 0
