@@ -1,0 +1,22 @@
+# Installing Postgresql, running sysbench
+name: Installing Postgresql, Sysbench, running sysbench with Postgresql version as input
+hosts: 
+become: yes
+tasks:
+  - name: Install PostgreSQL 
+    apt: name={{ item }} update_cache=true state=present
+    with_items:
+      - postgresql
+      - postgresql-contrib
+      - libpq-dev
+      - python3-psycopg2
+  - name: Installing sysbench
+    hosts:
+    become: yes
+    tasks:
+      - name: Install sysbench
+        yum:
+          name: sysbench
+          state: present
+      - name: Sysbench stresstest (60s / CPU)/ Running Sysbench
+        command: sysbench --max-time=60 --test=cpu --cpu-max-prime=200000 --num-threads=8 run

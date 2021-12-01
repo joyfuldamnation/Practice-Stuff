@@ -1,0 +1,23 @@
+# Installing Mongodb, running sysbench
+name: Installing Mongodb, Sysbench, running sysbench with Mongodb version as input
+hosts: 
+become: yes
+tasks:
+  - name: Importing public key
+    apt_key: keyserver=hkp://keyserver.ubuntu.com:80 id=7F0CEB10 state=present
+  - name: Mongodb repo adding
+    apt_repository: repo='deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' state=present
+  - name: installing mongodb
+    apt: pkg=mongodb-org state=latest update_cache=yes
+    handlers:
+    - name: start mongodb
+  - name: Installing sysbench
+    hosts:
+    become: yes
+    tasks:
+      - name: Install sysbench
+        yum:
+          name: sysbench
+          state: present
+      - name: Sysbench stresstest (60s / CPU)/ Running Sysbench
+        command: sysbench --max-time=60 --test=cpu --cpu-max-prime=200000 --num-threads=8 run
