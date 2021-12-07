@@ -39,8 +39,8 @@
   hosts: webservers
   become: yes
   vars_files:
-    - <Way to default version file>
-    - <Way to optional version file>
+    - <Way to default version installation ansible playbook>
+    - <Way to optional version installation ansible playbook>
   tasks:
     - name: ensure MySQL is at the latest version
       yum:

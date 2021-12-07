@@ -1,0 +1,16 @@
+#Install apache and create admin user 'apacheadmin' (Windows/Unix)
+- name: create apache username in localhost
+  hosts: localhost
+  become: yes
+  become_user: root
+  tasks:
+    - name: create username apacheadmin
+      user:
+        name: apacheadmin
+        group: users,admin
+        home: /home/weblogic
+
+    - name: install httpd
+      yum:
+        name: httpd
+        state: installed
