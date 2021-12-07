@@ -1,6 +1,6 @@
 - name: MySQL installation, Usage and Removal
   hosts: localhost
-  vars:
+  vars: 
     MYSQL_VERSION = 8.0
   tasks:
     - name: Install version 5.7
