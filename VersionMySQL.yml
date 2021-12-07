@@ -1,0 +1,35 @@
+- name: MySQL installation, Usage and Removal
+  hosts: localhost
+  vars:
+    MYSQL_VERSION = 8.0
+  tasks:
+    - name: Install version 5.7
+      yum:
+        update_cache: yes
+      package:
+        name: MySQL
+      with_items:
+        - mysql-server-core-5.7
+        - mysql-client-core-5.7
+      when: MYSQL_VERSION == 5.7
+  
+    - name: Install version 8.0
+      yum:
+        update_cache: yes
+      package:
+        name: MySQL
+      with_items:
+        - mysql-server
+        - mysql-client
+      when: MYSQL_VERSION == 8.0
+
+    - name: Ensuring MySQL service is running
+      service:
+        name: MySQL
+        state: started
+    
+    - name: Uninstalling MySQL
+      package:
+        name: MySQL
+        state: absent
+      become: true
