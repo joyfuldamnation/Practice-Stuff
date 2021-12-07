@@ -1,0 +1,53 @@
+#Defining variabe at runtime
+#ansible-playbook release.yml --extra-vars "version=1.23.45 other_variable=foo"
+#option1
+- name:  Playbook
+  hosts: localhost
+  become: yes
+  vars:
+    webapp:
+        version: &my_version
+        custom_name:
+            - "8.0"
+            - "5.7"
+  tasks:
+  - name: Using Anchor value
+    ansible.builtin.debug:
+        msg: My app is called "{{ webapp.custom_name | join('-') }}".
+
+#option2
+- name: Playbook
+  hosts: webservers
+  become: yes
+  vars:
+    key_file:  <Way to default version file>
+    cert_file: <Way to optional version file>
+    server_name: MySQL 
+  tasks:
+    - name: ensure MySQL is at the latest version
+      yum:
+        name: 
+        state: latest
+        with_items: mysql-server
+    # Ask sir how to use key_file and cert_file here
+    - name: ensure MySQL is running
+      service:
+        name: MySQL
+        state: started
+#option3
+- name: Playbook
+  hosts: webservers
+  become: yes
+  vars_files:
+    - <Way to default version file>
+    - <Way to optional version file>
+  tasks:
+    - name: ensure MySQL is at the latest version
+      yum:
+        name: 
+        state: latest
+        with_items: mysql-server
+    - name: ensure MySQL is running
+      service:
+        name: MySQL
+        state: started
