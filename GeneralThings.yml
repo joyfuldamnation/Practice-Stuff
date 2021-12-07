@@ -1,4 +1,29 @@
+#Running playbbok
+# ansible-playbook sampleplaybook.yml -i ansible_hosts
+
 #Dry running playbook
-#➜ ansible-playbook -C sampleplaybook.yml -i ansible_hosts
+# ansible-playbook -C sampleplaybook.yml -i ansible_hosts
+
 #Syntax check
-#➜ ansible-playbook --syntax-check sampleplaybook.yml -i ansible_hosts
+# ansible-playbook --syntax-check sampleplaybook.yml -i ansible_hosts
+
+#New encrypted file
+# ansible-vault create sampleplaybook.yml
+
+#Encrypt existing file
+# ansible-vault encrypt sampleplaybook.yml
+
+#Viewing Encrypted file
+# ansible-vault view sampleplaybook.yml
+
+#Editing encrypted file
+# ansible-vault edit sampleplaybook.yml
+
+#Changing password of encrypted file
+# ansible-vault rekey sampleplaybook.yml
+
+#Run encrypted file
+# ansible-playbook sampleplaybook.yml --ask-vault-pass
+
+#Manually decrypt encrypted file(Don't understand what it means)
+# ansible-vault decrypt sampleplaybook.yml
