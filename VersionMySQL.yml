@@ -8,14 +8,14 @@
         name: mysql-server-core-5.7
       with_items:
         - mysql-client-core-5.7
-      when: MYSQL_VERSION == 5.7
+      when: lookup('env', 'MYSQL_VERSION') == "5.7" 
   
     - name: Install version 8.0
       package:
         name: mysql-server
       with_items:
         - mysql-client
-      when: MYSQL_VERSION == 8.0
+      when: lookup('env', 'MYSQL_VERSION') == "8.0" 
 
     - name: Ensuring MySQL service is running
       service:
