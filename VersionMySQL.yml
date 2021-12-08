@@ -1,7 +1,7 @@
 - name: MySQL installation, Usage and Removal
   hosts: localhost
   vars: 
-    MYSQL_VERSION: 8.0
+    MYSQL_VERSION: "{{lookup('switch_hosts.yml', '/etc/ansible/localhost_vars')}}"
   tasks:
     - name: Install version 5.7
       package:
