@@ -1,7 +1,7 @@
 - name: MySQL installation, Usage and Removal
   hosts: localhost
   vars: 
-    MYSQL_VERSION: "{{lookup('switch_hosts.yml', '/etc/ansible/localhost_vars')}}"
+    MYSQL_VERSION: "{{ lookup('env', 'MYSQL_VERSION') }}"
   tasks:
     - name: Install version 5.7
       package:
@@ -19,11 +19,11 @@
 
     - name: Ensuring MySQL service is running
       service:
-        name: MySQL
+        name: mysql-server
         state: started
     
     - name: Uninstalling MySQL
       package:
-        name: MySQL
+        name: mysql-server
         state: absent
       become: true
