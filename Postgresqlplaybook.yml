@@ -1,0 +1,52 @@
+- name: PostgreSQL installation, Usage and Removal
+  hosts: localhost
+  vars: 
+    MYSQL_VERSION: "{{ lookup('env', 'PostgreSQL_VERSION') }}"
+  tasks:
+    - name: Install version 5.7
+      apt:
+        name: "{{item}}"
+      with_items:
+        - postgresql
+        - postgresql-server
+        - python3-psycopg2
+      when: lookup('env', 'PostgreSQL_VERSION') == "python enabled" 
+  
+    - name: Install version 13
+      apt:
+        name: "{{item}}"
+      with_items:
+        - postgresql
+        - postgresql-server
+      when: lookup('env', 'PostgreSQL_VERSION') == "python disabled" 
+
+    - name: Ensuring PostgreSQL service is running
+      service:
+        name: postgresql
+        state: started
+        enabled: yes
+    
+    - name: Creating a test database
+      mysql_db:
+        name: testdb
+        state: present
+
+    - name: Creating a new user
+      mysql_db:
+        name: Akshat
+        password: password
+        state: present
+
+    - name: Deleting the test database
+      mysql_db:
+        name: testdb
+        state: absent
+    
+    - name: Uninstalling PostgreSQL
+      apt:
+        name: "{{item}}"
+        state: absent
+      become: true
+      with_items:
+        - postgresql
+        - postgresql-server
