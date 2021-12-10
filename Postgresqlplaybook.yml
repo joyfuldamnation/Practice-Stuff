@@ -1,22 +1,43 @@
+#PLAY [PostgreSQL installation, Usage and Removal] ******************************
+
+#TASK [Gathering Facts] *********************************************************
+#ok: [localhost]
+
+#TASK [Install version with python support] *************************************
+#changed: [localhost] => (item=postgresql)
+#changed: [localhost] => (item=python3-psycopg2)
+
+#TASK [Install version standard version 13] *************************************
+#skipping: [localhost] => (item=postgresql) 
+
+#TASK [Ensuring PostgreSQL service is running] **********************************
+#fatal: [localhost]: FAILED! => {"changed": false, "msg": "Could not find the requested service postgresql: host"}
+
+#After running it as is, it displays the package as changed
+
 - name: PostgreSQL installation, Usage and Removal
   hosts: localhost
-  vars: 
-    PostgreSQL_VERSION: "{{ lookup('env', 'PostgreSQL_VERSION') }}"
+  become_method: sudo
   tasks:
-    - name: Install version with python support
+    - name: Install Postgresql in Debian systems
       apt:
         name: "{{item}}"
+        update_cache: yes
       with_items:
         - postgresql
+        - postgresql-server
         - python3-psycopg2
-      when: lookup('env', 'PostgreSQL_VERSION') == "pythonenabled" 
+      when: ansible_os_family =="Debian"
   
-    - name: Install version standard version 13
-      apt:
+    - name: Install Postgresql in RedHat systems
+      yum:
         name: "{{item}}"
+        update_cache: yes
       with_items:
         - postgresql
-      when: lookup('env', 'PostgreSQL_VERSION') == "pythondisabled" 
+        - postgresql-server
+        - python3-psycopg2
+      when: ansible_os_family =="RedHat"
 
     - name: Ensuring PostgreSQL service is running
       service:
