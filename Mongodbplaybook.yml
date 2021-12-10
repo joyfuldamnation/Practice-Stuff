@@ -1,0 +1,49 @@
+- name: Mongodb installation, Usage and Removal
+  hosts: localhost
+  vars: 
+    mongodb_version: "{{ lookup('env', 'mongodb_version') }}"
+  tasks:
+    - name: Install version 5.7
+      apt:
+        name: "{{item}}"
+      with_items:
+        - mongodb-org
+      when: lookup('env', 'mongodb_version') == "5.7" 
+  
+    - name: Install version 8.0
+      apt:
+        name: "{{item}}"
+      with_items:
+        - mongodb-org
+
+      when: lookup('env', 'mongodb_version') == "8.0" 
+
+    - name: Ensuring Mongodb service is running
+      service:
+        name: mongodb
+        state: started
+        enabled: yes
+    
+    - name: Creating a test database
+      mongodb_db:
+        name: testdb
+        state: present
+
+    - name: Creating a new user
+      mongodb_db:
+        name: Akshat
+        password: password
+        state: present
+
+    - name: Deleting the test database
+      mongodb_db:
+        name: testdb
+        state: absent
+    
+    - name: Uninstalling Mongodb
+      apt:
+        name: "{{item}}"
+        state: absent
+      become: true
+      with_items:
+        - mongodb-org
