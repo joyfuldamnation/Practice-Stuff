@@ -24,7 +24,7 @@
         name: "{{item}}"
         update_cache: yes
       with_items:
-        - postgresql
+        - postgresql-11
         - postgresql-server
         - python3-psycopg2
       when: ansible_os_family =="Debian"
@@ -34,7 +34,7 @@
         name: "{{item}}"
         update_cache: yes
       with_items:
-        - postgresql
+        - postgresql-11
         - postgresql-server
         - python3-psycopg2
       when: ansible_os_family =="RedHat"
