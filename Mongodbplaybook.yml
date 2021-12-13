@@ -1,5 +1,6 @@
 - name: Mongodb installation, Usage and Removal
   hosts: localhost
+  become: yes
   tasks:
     - name: MongoDB - Import public key
       apt_key:
@@ -15,11 +16,19 @@
         update_cache: yes
       when: ansible_os_family =="Debian"
 
-    - name: MongoDB - Install MongoDB in Debian
-      apt:
-        name: mongodb-org
-        state: present
+    - name: MongoDB | Install the packages in Debian
+      apt: 
+        name: "{{ item }}" 
+        state: present 
         update_cache: yes
+      with_items:
+        - mongodb-org
+        - mongodb-org-server
+        - mongodb-org-shell
+        - mongodb-org-mongos
+        - mongodb-org-tools
+      notify:
+        - restart mongodb
       when: ansible_os_family =="Debian" 
   
     - name: Installing in RedHat

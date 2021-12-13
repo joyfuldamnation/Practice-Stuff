@@ -1,5 +1,6 @@
 - name: MySQL installation, Usage and Removal
   hosts: localhost
+  become: yes
   vars: 
     MYSQL_VERSION: "{{ lookup('env', 'MYSQL_VERSION') }}"
   tasks:
@@ -7,8 +8,10 @@
       apt:
         name: "{{item}}"
       with_items:
-        - mysql-client-5.7
-        - mysql-server-5.7
+        - mysql-community-server
+        - mysql-client
+        - python3-mysqldb-dbg
+        - python3-pymysql
       when: lookup('env', 'MYSQL_VERSION') == "5.7" 
   
     - name: Install version 8.0
@@ -27,23 +30,7 @@
         name: mysql
         state: started
         enabled: yes
-    
-    - name: Creating a test database
-      mysql_db:
-        name: testdb
-        state: present
 
-    - name: Creating a new user
-      mysql_db:
-        name: Akshat
-        password: password
-        state: present
-
-    - name: Deleting the test database
-      mysql_db:
-        name: testdb
-        state: absent
-    
     - name: Uninstalling MySQL
       apt:
         name: "{{item}}"

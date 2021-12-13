@@ -17,15 +17,14 @@
 
 - name: PostgreSQL installation, Usage and Removal
   hosts: localhost
-  become_method: sudo
+  become: yes
   tasks:
     - name: Install Postgresql in Debian systems
       apt:
         name: "{{item}}"
         update_cache: yes
       with_items:
-        - postgresql-11
-        - postgresql-server
+        - postgresql-12
         - python3-psycopg2
       when: ansible_os_family =="Debian"
   
@@ -34,7 +33,7 @@
         name: "{{item}}"
         update_cache: yes
       with_items:
-        - postgresql-11
+        - postgresql-12
         - postgresql-server
         - python3-psycopg2
       when: ansible_os_family =="RedHat"
