@@ -1,0 +1,25 @@
+#Just running a Mysql Docker container
+- name: Running a MySQL Docker container
+  hosts: localhost
+  vars:
+    db_volume: db_data
+    image: "{{ lookup('env', 'image') }}"
+    MYSQL_ROOT_PASSWORD: "{{ lookup('env', 'MYSQL_ROOT_PASSWORD') }}"
+    MYSQL_DATABASE: "{{ lookup('env', 'MYSQL_DATABASE') }}"
+    MYSQL_USER: "{{ lookup('env', 'MYSQL_USER') }}"
+    MYSQL_PASSWORD: "{{ lookup('env', 'MYSQL_PASSWORD') }}"
+    ports: "{{lookup('env', 'ports')}}"
+  tasks:
+    - name: Launch mysql database container
+      docker_container:
+        name: db
+        image: lookup('env', 'image')
+        volumes:
+          - "{{db_volume}}:/var/lib/mysql"
+        restart: true
+        env:
+          MYSQL_ROOT_PASSWORD: lookup('env', 'MYSQL_ROOT_PASSWORD')
+          MYSQL_DATABASE: lookup('env', 'MYSQL_DATABASE')
+          MYSQL_USER: lookup('env', 'MYSQL_USER')
+          MYSQL_PASSWORD: lookup('env', 'MYSQL_PASSWORD')
+        ports: lookup('env', 'ports')
