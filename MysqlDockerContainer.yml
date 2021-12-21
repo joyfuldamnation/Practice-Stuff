@@ -21,6 +21,7 @@
           MYSQL_USER: pmm
           MYSQL_PASSWORD: password
         ports: lookup('env', 'ports')
+        command: docker wait db
     - name: running commands
       community.docker.docker_container:
         name: db
