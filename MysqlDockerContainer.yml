@@ -6,7 +6,7 @@
     docker_network: ansible_net
     image: "{{ lookup('env', 'image') }}"
     MYSQL_ROOT_PASSWORD: "{{ lookup('env', 'MYSQL_ROOT_PASSWORD') }}"
-    ports: "{{lookup('env', 'ports')}}"
+    ports: "{{ lookup('env', 'ports') }}"
   tasks:
     - name: Launch mysql database container
       community.docker.docker_container:
