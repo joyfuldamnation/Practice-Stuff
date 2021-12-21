@@ -3,15 +3,13 @@
   hosts: localhost
   vars:
     db_volume: db_data
+    docker_network: ansible_net
     image: "{{ lookup('env', 'image') }}"
     MYSQL_ROOT_PASSWORD: "{{ lookup('env', 'MYSQL_ROOT_PASSWORD') }}"
-    MYSQL_DATABASE: "{{ lookup('env', 'MYSQL_DATABASE') }}"
-    MYSQL_USER: "{{ lookup('env', 'MYSQL_USER') }}"
-    MYSQL_PASSWORD: "{{ lookup('env', 'MYSQL_PASSWORD') }}"
     ports: "{{lookup('env', 'ports')}}"
   tasks:
     - name: Launch mysql database container
-      docker_container:
+      community.docker.docker_container:
         name: db
         image: lookup('env', 'image')
         volumes:
@@ -19,7 +17,18 @@
         restart: true
         env:
           MYSQL_ROOT_PASSWORD: lookup('env', 'MYSQL_ROOT_PASSWORD')
-          MYSQL_DATABASE: lookup('env', 'MYSQL_DATABASE')
-          MYSQL_USER: lookup('env', 'MYSQL_USER')
-          MYSQL_PASSWORD: lookup('env', 'MYSQL_PASSWORD')
+          MYSQL_DATABASE: database
+          MYSQL_USER: pmm
+          MYSQL_PASSWORD: password
         ports: lookup('env', 'ports')
+    - name: Create user pmm
+      community.docker.docker_container:
+        name: db
+        state: present
+        image: lookup('env', 'image')
+        command:
+          - docker exec mysql "CREATE USER 'pmm'@'localhost' IDENTIFIED BY 'pass' WITH MAX_USER_CONNECTIONS 10;"
+          - docker exec mysql "GRANT SELECT, PROCESS, REPLICATION CLIENT, RELOAD ON . TO 'pmm'@'localhost';"
+          - docker exec mysql "SET GLOBAL slow_query_log='ON';"
+          - docker exec mysql "SET GLOBAL long_query_time=0;"
+          - docker exec mysql "SET GLOBAL log_slow_rate_limit=1;"
