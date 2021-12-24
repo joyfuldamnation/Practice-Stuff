@@ -1,0 +1,14 @@
+- name: simple nginx deploy
+  hosts: localhost
+  vars:
+    image: "{{ lookup('env', 'image') }}"
+    ports: "{{ lookup('env', 'ports') }}"
+  tasks:
+    - name: deploy nginx docker container
+      docker_container:
+        image: lookup('env', 'image')
+        name: nginx
+        state: started
+        auto_remove: true
+        ports:
+          - lookup('env', 'ports')
