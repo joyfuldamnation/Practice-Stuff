@@ -31,6 +31,7 @@
       I.click('Login button');
       I.waitForElement("//button[@aria-label='Skip change password button']", 30);
       I.click('Skip change password button');
+      I.waitForElement("//a//span[text()='PMM']", 30);
       },
   
     register(email, password) {

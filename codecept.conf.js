@@ -19,7 +19,9 @@ exports.config = {
   },
   include: {
     I: './steps_file.js',
-    loginPage: "./tests/pages/loginObject.js"
+    loginPage: "./tests/pages/loginObject.js",
+    dashboardPage: "./tests/pages/dashboardObject.js",
+    inventoryPage: "./tests/pages/inventoryObject.js",
   },
   bootstrap: null,
   mocha: {},
