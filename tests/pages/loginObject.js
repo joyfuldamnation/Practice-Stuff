@@ -12,7 +12,7 @@
     });
   }*/
 
-  const { I, loginPage } = inject();
+  const { I } = inject();
 
   module.exports = {
   

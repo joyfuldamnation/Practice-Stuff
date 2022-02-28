@@ -1,4 +1,4 @@
-const { I, inventoryPage} = inject();
+const { I } = inject();
 
 module.exports = {
 

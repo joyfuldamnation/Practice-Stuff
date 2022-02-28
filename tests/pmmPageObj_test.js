@@ -10,6 +10,5 @@ Scenario('Startup pmm making remote instances', ({I}) =>{
     dashboardPage.RemoteInstanceof('mysql');
     dashboardPage.RemoteInstanceof('postgresql');
     inventoryPage.RemoveEverything();
-    dashboardPage.gotoRIP();
     I.wait(2);
 });

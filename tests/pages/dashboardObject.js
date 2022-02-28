@@ -1,4 +1,4 @@
-const { I, dashboardPage } = inject();
+const { I } = inject();
 
 module.exports = {
 
