@@ -38,6 +38,7 @@ module.exports = {
     I.click("//li[@aria-label='Tab Services']");
     I.waitForElement("//div[@data-testid='select-all']", 30);
     I.click("//div[@data-testid='select-all']");
+    I.wait(2);
     I.click("//span[text()='Delete']");
     I.waitForElement("//button//span[text()='Proceed']", 30);
     I.click("//button//span[text()='Proceed']");

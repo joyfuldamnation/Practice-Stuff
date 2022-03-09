@@ -1,0 +1,23 @@
+Service type        Service name        Address and port        Service ID
+MongoDB             mongo2              some-mongo:27017        /service_id/064ef8f5-b65e-4ee8-8fb6-064a06163c1d
+MongoDB             mongo7              some-mongo:27017        /service_id/1cb6d40a-0a58-49e6-85a3-780951377330
+MongoDB             mongo5              some-mongo:27017        /service_id/50c37331-6c5b-4354-a7b8-c78cb42cb3e6
+MongoDB             mongo1              some-mongo:27017        /service_id/b4c31757-12f4-474e-8e08-3845758917df
+MongoDB             mongo3              some-mongo:27017        /service_id/dc20bff0-3dc3-49d0-abed-bce4534d7a09
+MongoDB             mongo6              some-mongo:27017        /service_id/fd0bd61f-4373-46eb-b4c1-15a700d0700f
+
+Agent type                    Status           Metrics Mode        Agent ID                                              Service ID
+pmm_agent                     Connected                            /agent_id/4a5b878d-5c88-4b8f-a49c-dd9acbc57f1a         
+mongodb_exporter              Unknown          push                /agent_id/441c9070-5fdf-46e0-8177-820495310824        /service_id/1cb6d40a-0a58-49e6-85a3-780951377330 
+mongodb_exporter              Running          push                /agent_id/51c9a025-44e0-4891-b2aa-aef9225a3f6c        /service_id/064ef8f5-b65e-4ee8-8fb6-064a06163c1d 
+mongodb_exporter              Running          push                /agent_id/6ef7fabf-07f7-4705-aa2d-2d13173aa24c        /service_id/50c37331-6c5b-4354-a7b8-c78cb42cb3e6 
+mongodb_exporter              Running          push                /agent_id/9657af73-e11e-4a6a-bd6b-a49b067f7c5a        /service_id/fd0bd61f-4373-46eb-b4c1-15a700d0700f 
+mongodb_exporter              Running          push                /agent_id/bde4f3fa-1a87-45d1-92ab-f912eccc0e75        /service_id/b4c31757-12f4-474e-8e08-3845758917df 
+mongodb_exporter              Running          push                /agent_id/ce0b8c06-b456-44e4-9901-9d86ba917669        /service_id/dc20bff0-3dc3-49d0-abed-bce4534d7a09 
+mongodb_profiler_agent        Running                              /agent_id/1aafc67b-a868-49e2-a192-98b4a5eed4ec        /service_id/50c37331-6c5b-4354-a7b8-c78cb42cb3e6 
+mongodb_profiler_agent        Unknown                              /agent_id/223095c3-e3e2-4c1c-a336-949d60df2f27        /service_id/1cb6d40a-0a58-49e6-85a3-780951377330 
+mongodb_profiler_agent        Running                              /agent_id/5e363434-645e-4ecf-9d49-412be28f58fe        /service_id/064ef8f5-b65e-4ee8-8fb6-064a06163c1d 
+mongodb_profiler_agent        Running                              /agent_id/876b6b06-f85b-4b3c-86b8-9a9b9c8e8111        /service_id/b4c31757-12f4-474e-8e08-3845758917df 
+mongodb_profiler_agent        Running                              /agent_id/e334c803-4222-4291-92d6-cc8daea30cd1        /service_id/fd0bd61f-4373-46eb-b4c1-15a700d0700f 
+mongodb_profiler_agent        Running                              /agent_id/e46e1fba-e0cb-430e-9917-8ca509a55dd8        /service_id/dc20bff0-3dc3-49d0-abed-bce4534d7a09
+

@@ -9,9 +9,7 @@ module.exports = {
 
   // introducing methods
   gotoRIP() {
-    I.waitForElement("//a//span[text()='PMM']", 30);
-    I.click("//a//span[text()='PMM']");
-    I.click("//ul//li//a[text()='PMM Add Instance']");
+    I.amOnPage('http://localhost:8080/graph/add-instance');
     },
 
   RemoteInstanceof(nameofdb) {
@@ -29,6 +27,12 @@ module.exports = {
         break;
       case 'mongodb':
         I.click("//button[@data-testid='mongodb-instance']");
+        I.waitForElement("//input[@placeholder='Hostname']", 30);
+        I.fillField('Hostname', 'some-mongo');
+        I.fillField('username', 'admin');
+        I.fillField('password', 'admin');
+        I.click("//button[@id='addInstance']");
+        I.waitForElement("//td[text()='MongoDB']", 30);
         break;
       case 'postgresql':
         I.click("//button[@data-testid='postgresql-instance']");

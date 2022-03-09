@@ -1,0 +1,8 @@
+Service type        Service name        Address and port        Service ID
+MongoDB             mongo7              some-mongo:27017        /service_id/f85cc02f-6e67-45fc-8e6d-cc8d3e06e654
+
+Agent type                    Status           Metrics Mode        Agent ID                                              Service ID
+pmm_agent                     Connected                            /agent_id/4a5b878d-5c88-4b8f-a49c-dd9acbc57f1a         
+mongodb_exporter              Unknown          push                /agent_id/a569dfaf-34dc-4fe4-9ce6-acec8e655221        /service_id/f85cc02f-6e67-45fc-8e6d-cc8d3e06e654 
+mongodb_profiler_agent        Unknown                              /agent_id/457d89c2-e7b8-4c9f-9455-4da21a8af915        /service_id/f85cc02f-6e67-45fc-8e6d-cc8d3e06e654
+
