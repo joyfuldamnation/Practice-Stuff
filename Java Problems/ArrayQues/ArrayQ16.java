@@ -1,4 +1,4 @@
-public class Main {
+public class Solution{
     int max = arr[0];
     int smax = Integer.MIN_VALUE;
     for(int i=0; i<arr.length; i++){
